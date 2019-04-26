@@ -54,7 +54,6 @@ def returnShpCount(shapePath):
         for i in range(attributes.GetFieldCount()):
             print(attributes.GetFieldDefn(i).GetName(),end="\t")
 
-
         print("\n\nNumber of attributes in %s: %d" % (os.path.basename(shapePath),attributes.GetFieldCount()))
 
 for shapes in out_shapes:
