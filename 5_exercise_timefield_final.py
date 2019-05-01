@@ -15,6 +15,7 @@ layer = qgis.utils.iface.activeLayer();
 layer.id();
 print(layer.featureCount())
 
+dictionary=dict()
 features = layer.getFeatures()
 for feature in features:
     # retrieve id and attribute values
@@ -23,14 +24,15 @@ for feature in features:
     # attributes is a list
     for field, attr in zip(layer.fields(), attributes):
         if field.name()=='time':
-            dictionary[feature.id]=attr.toString('hh:mm:ss')
+            dictionary[feature.id()]=attr.toString('hh:mm:ss')
             #print(field.name(), ':', attr.toString('hh:mm:ss'))
 
 #for field in layer.fields():
 #    print(field.name(), field.typeName())
 
-#for idgpx, timegpx in dictionary:
-#    print(idgpx,':',timegpx)
+for idgpx in dictionary:
+    print(idgpx)
+    if idgpx==5:break
 
 #3. Load the shapefile
 shape_file = os.path.join('C:\\','Users','Violet','Documents','Master','Europa','Clases Alemania','Python in GIS','code','pigis','data','track_points.shp')
@@ -53,12 +55,12 @@ layerShp.updateFields()
 # with as the key the id of that feature
 # (Remember how to get the time from a datetime object from the basic lib lecture)
 
-
 #6. Update for all features in the shapefile the new ‘time_str’ attribute
 featuresShp = layerShp.getFeatures()
 for featureShp in featuresShp:
     # retrieve id and attribute values
     print("Feature ID: %d " % featureShp.id())
-    #if caps & QgsVectorDataProvider.ChangeAttributeValues:
-    #    attrs={QgsVectorDataProvider.fieldNameIndex('time_str'):dictionary[featureShp.id()]}
-    #    layerShp.dataProvider().changeAttributeValues({featureShp.id():attrs})
+    if caps & QgsVectorDataProvider.ChangeAttributeValues:
+        attrs={26:dictionary[featureShp.id()]}
+        layerShp.dataProvider().changeAttributeValues({featureShp.id():attrs})
+        #if featureShp.id()==5:break
